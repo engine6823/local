@@ -1,0 +1,36 @@
+@startuml classDiagram
+
+interface LocalSearch {
+  List<Local> search(String keyword, Integer count)
+}
+
+class KakaoLocalSearch {
+  -server
+  -restTemplate
+  --
+  +KakaoLocalSearchResult search(KakaoLocalSearchQuery query)
+  +List<Local> search(String keyword, Integer count)
+}
+
+class NaverLocalSearch {
+  -server
+  -restTemplate
+  --
+  +NaverLocalSearchResult search(NaverLocalSearchQuery query)
+  +List<Local> search(String keyword, Integer count)
+}
+
+class KakaoNaverLocalSearch {
+  -kakaoLocalSearch
+  -naverLocalSearch
+  --
+  +List<Local> search(String keyword, Integer count)
+}
+
+LocalSearch<|--KakaoLocalSearch
+LocalSearch<|--NaverLocalSearch
+LocalSearch<|--KakaoNaverLocalSearch
+KakaoLocalSearch<--KakaoNaverLocalSearch
+NaverLocalSearch<--KakaoNaverLocalSearch
+
+@enduml
